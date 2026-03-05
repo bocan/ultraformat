@@ -4,6 +4,12 @@
 
 No telemetry. No server calls. No tracking. No cookies. Every byte stays on your machine.
 
+![UltraFormat screenshot](docs/screenshot.png)
+
+This project can be run locally directly, via a Docker container, deployed on a company intranet, or hosted on a Raspberry Pi.
+
+It also available at [https://ultraformat.dev](https://ultraformat.dev) — a free public instance with no ads, no tracking, and no data collection. If you find it useful, consider hosting your own instance or contributing to the project!
+
 ---
 
 ## Why?
@@ -55,7 +61,7 @@ No UI framework. No component library. Hand-written CSS with a custom design sys
 ### Install & Run
 
 ```bash
-git clone https://github.com/YOUR_USER/ultraformat.git
+git clone https://github.com/bocan/ultraformat.git
 cd ultraformat
 npm install
 npm run dev
