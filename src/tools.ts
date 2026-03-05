@@ -1,3 +1,15 @@
+import type { ComponentType } from 'react';
+import {
+  Braces,
+  ArrowLeftRight,
+  Binary,
+  Sparkles,
+  Regex,
+  Link,
+  KeyRound,
+  Palette,
+} from 'lucide-react';
+
 export interface Tool {
   id: string;
   name: string;
@@ -6,7 +18,7 @@ export interface Tool {
   color: string;
   colorDim: string;
   colorGlow: string;
-  icon: string;
+  icon: ComponentType<{ size?: number; strokeWidth?: number }>;
 }
 
 export const tools: Tool[] = [
@@ -18,7 +30,7 @@ export const tools: Tool[] = [
     color: 'var(--cyan)',
     colorDim: 'var(--cyan-dim)',
     colorGlow: 'var(--cyan-glow)',
-    icon: '{ }',
+    icon: Braces,
   },
   {
     id: 'diff',
@@ -28,7 +40,7 @@ export const tools: Tool[] = [
     color: 'var(--magenta)',
     colorDim: 'var(--magenta-dim)',
     colorGlow: 'var(--magenta-glow)',
-    icon: '⇄',
+    icon: ArrowLeftRight,
   },
   {
     id: 'base64',
@@ -38,7 +50,7 @@ export const tools: Tool[] = [
     color: 'var(--amber)',
     colorDim: 'var(--amber-dim)',
     colorGlow: 'var(--amber-glow)',
-    icon: '◈',
+    icon: Binary,
   },
   {
     id: 'beautify',
@@ -48,7 +60,7 @@ export const tools: Tool[] = [
     color: 'var(--lime)',
     colorDim: 'var(--lime-dim)',
     colorGlow: 'var(--lime-glow)',
-    icon: '✦',
+    icon: Sparkles,
   },
   {
     id: 'regex',
@@ -58,7 +70,7 @@ export const tools: Tool[] = [
     color: 'var(--violet)',
     colorDim: 'var(--violet-dim)',
     colorGlow: 'var(--violet-glow)',
-    icon: '/.*/',
+    icon: Regex,
   },
   {
     id: 'url',
@@ -68,7 +80,7 @@ export const tools: Tool[] = [
     color: 'var(--teal)',
     colorDim: 'var(--teal-dim)',
     colorGlow: 'var(--teal-glow)',
-    icon: '%',
+    icon: Link,
   },
   {
     id: 'jwt',
@@ -78,7 +90,7 @@ export const tools: Tool[] = [
     color: 'var(--rose)',
     colorDim: 'var(--rose-dim)',
     colorGlow: 'var(--rose-glow)',
-    icon: '🔑',
+    icon: KeyRound,
   },
   {
     id: 'color',
@@ -88,6 +100,6 @@ export const tools: Tool[] = [
     color: 'var(--orange)',
     colorDim: 'var(--orange-dim)',
     colorGlow: 'var(--orange-glow)',
-    icon: '◐',
+    icon: Palette,
   },
 ];
