@@ -73,7 +73,7 @@ export default function Home() {
 
       <footer className="home-footer">
         <p>
-          Open source. Self-hosted. Built because online tools can't be trusted with your keys.
+          <a href="https://github.com/bocan/ultraformat" target="_blank" rel="noopener noreferrer">Open Source</a> and can be self-hosted. Built because online tools can't always be trusted with your keys.
         </p>
       </footer>
     </div>
