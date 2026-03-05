@@ -1,0 +1,42 @@
+/* ═══════════════════════════════════════
+   Placeholder — Coming Soon pages
+   ═══════════════════════════════════════ */
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-md);
+  min-height: calc(100dvh - 56px - var(--space-lg) * 2 - 40px);
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.placeholder__icon {
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xl);
+  background: var(--ph-dim);
+  border: 1px solid var(--ph-color);
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ph-color);
+}
+
+.placeholder__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: var(--text-primary);
+}
+
+.placeholder__desc {
+  max-width: 400px;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

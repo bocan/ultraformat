@@ -1,0 +1,194 @@
+/* ═══════════════════════════════════════
+   Layout — Topbar & Structure
+   ═══════════════════════════════════════ */
+
+.layout {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top Bar ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: 0 var(--space-lg);
+  height: 56px;
+  background: var(--topbar-bg);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.topbar__logo {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--bg-deep);
+}
+
+.topbar__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* ── Tabs ── */
+.topbar__tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.topbar__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.topbar__tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.topbar__tab:hover {
+  color: var(--text-primary);
+  background: var(--tab-dim);
+}
+
+.topbar__tab--active {
+  color: var(--tab-color) !important;
+  background: var(--tab-dim) !important;
+  box-shadow: 0 0 12px var(--tab-glow);
+}
+
+.topbar__tab-icon {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ── Privacy badge ── */
+.topbar__badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lime);
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--lime-dim);
+  background: var(--lime-dim);
+  width: 175px;
+  overflow: hidden;
+}
+
+.topbar__badge-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--lime);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.topbar__badge-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+.topbar__badge-text--visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.topbar__badge-text--out {
+  opacity: 0;
+  transform: translateX(-110%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.topbar__badge-text--in {
+  opacity: 0;
+  transform: translateX(110%);
+  transition: none;
+}
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  padding: var(--space-lg);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+.main--home {
+  max-width: 1200px;
+  padding-top: var(--space-2xl);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .topbar {
+    gap: var(--space-sm);
+    padding: 0 var(--space-md);
+  }
+  .topbar__name {
+    display: none;
+  }
+  .topbar__tab-label {
+    display: none;
+  }
+  .topbar__badge {
+    display: none;
+  }
+}
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.25s ease;
+}
+.theme-toggle:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-overlay);
+  transform: rotate(20deg) scale(1.08);
+}
+.theme-toggle__icon {
+  font-size: 1rem;
+  line-height: 1;
+}

@@ -1,0 +1,224 @@
+/* ═══════════════════════════════════════
+   JWT Decoder Tool
+   Accent: Rose
+   ═══════════════════════════════════════ */
+
+.jwt-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: calc(100dvh - 56px - var(--space-lg) * 2);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ── Input bar ── */
+.jwt-input {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.jwt-input__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.jwt-input__controls {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.jwt-input__btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.jwt-input__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.jwt-input__editor {
+  border: none;
+  border-radius: 0;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  background: var(--bg-base);
+  min-height: 80px;
+  resize: vertical;
+  word-break: break-all;
+}
+
+/* ── Error ── */
+.jwt-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 0, 128, 0.08);
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--magenta);
+}
+
+.jwt-error__icon {
+  font-weight: 700;
+}
+
+/* ── Decoded sections ── */
+.jwt-sections {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-md);
+  min-height: 0;
+}
+
+.jwt-section {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.jwt-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.jwt-section__header--header {
+  color: var(--rose);
+}
+.jwt-section__header--payload {
+  color: var(--teal);
+}
+.jwt-section__header--signature {
+  color: var(--violet);
+}
+
+.jwt-section__body {
+  flex: 1;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  overflow: auto;
+  background: var(--bg-base);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.jwt-section__copy {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--rose);
+  padding: 4px 10px;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.jwt-section__copy:hover {
+  background: var(--rose-dim);
+}
+.jwt-section__copy--done {
+  color: var(--lime) !important;
+}
+
+/* ── Claims table ── */
+.jwt-claims {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.jwt-claims td {
+  padding: 4px 0;
+  vertical-align: top;
+}
+
+.jwt-claims__key {
+  color: var(--rose);
+  font-weight: 600;
+  padding-right: var(--space-md);
+  white-space: nowrap;
+}
+
+.jwt-claims__val {
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.jwt-claims__val--expired {
+  color: var(--magenta);
+  font-weight: 700;
+}
+
+.jwt-claims__val--valid {
+  color: var(--lime);
+}
+
+.jwt-claims__sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ── Signature (raw) ── */
+.jwt-sig-raw {
+  color: var(--violet);
+  word-break: break-all;
+}
+
+/* ── Empty state ── */
+.jwt-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .jwt-sections {
+    grid-template-columns: 1fr;
+  }
+  .jwt-tool {
+    height: auto;
+    min-height: calc(100dvh - 56px - var(--space-lg) * 2);
+  }
+}

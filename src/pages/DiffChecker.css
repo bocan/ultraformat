@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════
+   Diff Checker Tool
+   Accent: Magenta
+   ═══════════════════════════════════════ */
+
+.diff-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: calc(100dvh - 56px - var(--space-lg) * 2);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ── Toolbar (mirrors JSON Formatter) ── */
+.diff-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.diff-toolbar__tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-raised);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  border: 1px solid var(--border-subtle);
+}
+
+.diff-toolbar__tab {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.diff-toolbar__tab:hover {
+  color: var(--text-primary);
+}
+.diff-toolbar__tab--active {
+  background: var(--magenta-dim);
+  color: var(--magenta);
+}
+
+.diff-toolbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.diff-toolbar__stats {
+  display: flex;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.diff-toolbar__stat--added {
+  color: var(--lime);
+}
+.diff-toolbar__stat--removed {
+  color: var(--magenta);
+}
+
+.diff-toolbar__btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.diff-toolbar__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+/* ── Input Panes ── */
+.diff-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  flex: 1;
+  min-height: 0;
+}
+
+.diff-pane {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.diff-pane__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.diff-pane__meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.diff-pane__editor {
+  flex: 1;
+  border: none;
+  border-radius: 0;
+  padding: var(--space-md);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  background: var(--bg-base);
+  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
+}
+
+/* ── Diff Output ── */
+.diff-output {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-height: 50vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.diff-output__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+/* ── Split View ── */
+.diff-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: auto;
+  flex: 1;
+}
+
+.diff-split__col {
+  overflow-x: auto;
+  border-right: 1px solid var(--border-subtle);
+}
+.diff-split__col:last-child {
+  border-right: none;
+}
+
+/* ── Inline View ── */
+.diff-inline {
+  overflow: auto;
+  flex: 1;
+}
+
+/* ── Diff Lines (shared) ── */
+.diff-line {
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  min-height: 1.65em;
+}
+
+.diff-line__no {
+  flex-shrink: 0;
+  width: 40px;
+  text-align: right;
+  padding: 0 8px 0 4px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.diff-line__no--old,
+.diff-line__no--new {
+  width: 36px;
+}
+
+.diff-line__prefix {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+  font-weight: 700;
+  user-select: none;
+}
+
+.diff-line__text {
+  flex: 1;
+  padding-right: var(--space-md);
+  white-space: pre;
+}
+
+/* ── Line type colors ── */
+.diff-line--equal {
+  background: transparent;
+}
+.diff-line--equal .diff-line__prefix {
+  color: var(--text-muted);
+}
+
+.diff-line--added {
+  background: rgba(170, 255, 0, 0.08);
+}
+.diff-line--added .diff-line__prefix {
+  color: var(--lime);
+}
+.diff-line--added .diff-line__text {
+  color: var(--text-primary);
+}
+
+.diff-line--removed {
+  background: rgba(255, 0, 128, 0.08);
+}
+.diff-line--removed .diff-line__prefix {
+  color: var(--magenta);
+}
+.diff-line--removed .diff-line__text {
+  color: var(--text-primary);
+}
+
+.diff-line--empty {
+  background: var(--bg-surface);
+  opacity: 0.4;
+}
+
+/* ── Character-level highlights (GitHub-style) ── */
+.diff-hl {
+  background: none;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0;
+}
+.diff-hl--removed {
+  background: rgba(255, 0, 128, 0.25);
+}
+.diff-hl--added {
+  background: rgba(170, 255, 0, 0.22);
+}
+
+/* Light mode — needs stronger contrast */
+[data-theme="light"] .diff-hl--removed {
+  background: rgba(163, 0, 82, 0.2);
+}
+[data-theme="light"] .diff-hl--added {
+  background: rgba(71, 117, 0, 0.2);
+}
+
+/* ── Identical match message ── */
+.diff-match {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+.diff-match__icon {
+  color: var(--lime);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .diff-inputs {
+    grid-template-columns: 1fr;
+  }
+  .diff-split {
+    grid-template-columns: 1fr;
+  }
+  .diff-tool {
+    height: auto;
+    min-height: calc(100dvh - 56px - var(--space-lg) * 2);
+  }
+  .diff-pane__editor {
+    min-height: 150px;
+  }
+}

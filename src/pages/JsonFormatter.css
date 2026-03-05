@@ -1,0 +1,203 @@
+/* ═══════════════════════════════════════
+   JSON Formatter Tool
+   Accent: Cyan
+   ═══════════════════════════════════════ */
+
+.json-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: calc(100dvh - 56px - var(--space-lg) * 2);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ── Toolbar ── */
+.json-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.json-toolbar__tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-raised);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  border: 1px solid var(--border-subtle);
+}
+
+.json-toolbar__tab {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.json-toolbar__tab:hover {
+  color: var(--text-primary);
+}
+.json-toolbar__tab--active {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+}
+
+.json-toolbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.json-toolbar__indent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.json-toolbar__indent select {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--bg-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 6px 10px;
+  outline: none;
+}
+
+.json-toolbar__btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.json-toolbar__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+/* ── Panes ── */
+.json-panes {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  min-height: 0;
+}
+
+.json-pane {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.json-pane__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.json-pane__meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.json-pane__copy {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cyan);
+  padding: 4px 10px;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.json-pane__copy:hover:not(:disabled) {
+  background: var(--cyan-dim);
+}
+.json-pane__copy:disabled {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+.json-pane__copy--done {
+  color: var(--lime) !important;
+}
+
+.json-pane__editor {
+  flex: 1;
+  border: none;
+  border-radius: 0;
+  padding: var(--space-md);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  background: var(--bg-base);
+  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
+}
+
+.json-pane__editor--output {
+  color: var(--cyan);
+}
+
+.json-pane__error {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #FF5555;
+  background: rgba(255, 85, 85, 0.06);
+  line-height: 1.5;
+}
+
+.json-pane__error-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 85, 85, 0.15);
+  font-size: 0.625rem;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .json-panes {
+    grid-template-columns: 1fr;
+  }
+  .json-tool {
+    height: auto;
+    min-height: calc(100dvh - 56px - var(--space-lg) * 2);
+  }
+  .json-pane__editor {
+    min-height: 200px;
+  }
+}
