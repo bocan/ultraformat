@@ -69,7 +69,7 @@ export default function Layout() {
               } as React.CSSProperties}
               aria-label={tool.name}
             >
-              <span className="topbar__tab-icon" aria-hidden="true">{tool.icon}</span>
+              <span className="topbar__tab-icon" aria-hidden="true"><tool.icon size={14} strokeWidth={2.5} /></span>
               <span className="topbar__tab-label">{tool.name}</span>
             </NavLink>
           ))}

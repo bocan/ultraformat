@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ShieldOff, Server, HardDrive } from 'lucide-react';
 import { tools } from '../tools';
 import './Home.css';
 
@@ -23,21 +24,21 @@ export default function Home() {
         <h2 id="privacy-heading" className="sr-only">Privacy Guarantees</h2>
         <div className="privacy-banner__grid" role="list">
           <div className="privacy-banner__item" role="listitem">
-            <span className="privacy-banner__icon" aria-hidden="true">⊘</span>
+            <span className="privacy-banner__icon" aria-hidden="true"><ShieldOff size={20} /></span>
             <div>
               <strong>No Cookies</strong>
               <p>Zero tracking cookies. Zero analytics. Zero fingerprinting.</p>
             </div>
           </div>
           <div className="privacy-banner__item" role="listitem">
-            <span className="privacy-banner__icon" aria-hidden="true">⬡</span>
+            <span className="privacy-banner__icon" aria-hidden="true"><Server size={20} /></span>
             <div>
               <strong>No Server Processing</strong>
               <p>Every operation runs in your browser via JavaScript. No API calls, ever.</p>
             </div>
           </div>
           <div className="privacy-banner__item" role="listitem">
-            <span className="privacy-banner__icon" aria-hidden="true">◉</span>
+            <span className="privacy-banner__icon" aria-hidden="true"><HardDrive size={20} /></span>
             <div>
               <strong>Data Stays Local</strong>
               <p>Your code & data never leave your machine. Inspect the network tab yourself.</p>
@@ -62,7 +63,7 @@ export default function Home() {
             } as React.CSSProperties}
           >
             <div className="tool-card__icon-wrap" aria-hidden="true">
-              <span className="tool-card__icon">{tool.icon}</span>
+              <span className="tool-card__icon"><tool.icon size={22} strokeWidth={2} /></span>
             </div>
             <h2 className="tool-card__name">{tool.name}</h2>
             <p className="tool-card__desc">{tool.description}</p>
