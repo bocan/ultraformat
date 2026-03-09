@@ -1,14 +1,11 @@
-# Build, test, and deploy to GitHub Pages
+# CI runs on every push and PR.
+# Merges to main: deploy to GitHub Pages + bump version + changelog + release.
 
 name: CI & Deploy
 
 on:
   push:
-    branches: [ "main" ]
-    paths-ignore:
-      - 'CHANGELOG.md'
-      - 'package.json'
-      - 'package-lock.json
+    branches: [ "**" ]
   pull_request:
     branches: [ "main" ]
 
@@ -16,14 +13,13 @@ permissions:
   contents: write
   pages: write
   id-token: write
-  pull-requests: writ
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -39,36 +35,19 @@ jobs:
     - run: npm test
     - run: npm run build
 
-    - name: Configure Git
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com
-
     - name: Upload Pages artifact
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: actions/upload-pages-artifact@v3
       with:
         path: dist/
 
-    - name: Extract version from package.json
-      id: extract_version
-      run: |
-        VERSION=$(node -p "require('./package.json').version")
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: v${{ steps.extract_version.outputs.version }}
-        name: Release v${{ steps.extract_version.outputs.version }}
-        generate_release_notes: true
-        draft: false
-        prerelease: false
-
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: build
+    needs: ci
     runs-on: ubuntu-latest
+    concurrency:
+      group: "pages-deploy"
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -76,3 +55,49 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+
+  release:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: ci
+    runs-on: ubuntu-latest
+    concurrency:
+      group: "release"
+      cancel-in-progress: false
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - name: Use Node.js 24.x
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24.x
+        cache: 'npm'
+
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Bump patch version
+      id: version
+      run: |
+        NEW_VERSION=$(npm version patch --no-git-tag-version)
+        echo "tag=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+        echo "Bumped to ${NEW_VERSION}"
+
+    - name: Commit version bump
+      run: |
+        git add package.json package-lock.json
+        git commit -m "release: ${{ steps.version.outputs.tag }} [skip ci]"
+        git tag "${{ steps.version.outputs.tag }}"
+        git push origin main --tags
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.version.outputs.tag }}
+        name: Release ${{ steps.version.outputs.tag }}
+        generate_release_notes: true
+        draft: false
+        prerelease: false
