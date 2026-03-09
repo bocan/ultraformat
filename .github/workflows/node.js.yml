@@ -53,24 +53,26 @@ jobs:
         node-version: 24.x
         cache: 'npm'
 
+    - run: npm ci
+
     - name: Configure Git
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Bump patch version
+    - name: Run release
+      run: npm run release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push changes
+      run: git push --follow-tags origin main
+
+    - name: Extract version
       id: version
       run: |
-        NEW_VERSION=$(npm version patch --no-git-tag-version)
-        echo "tag=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
-        echo "Bumped to ${NEW_VERSION}"
-
-    - name: Commit version bump
-      run: |
-        git add package.json package-lock.json
-        git commit -m "release: ${{ steps.version.outputs.tag }} [skip ci]"
-        git tag "${{ steps.version.outputs.tag }}"
-        git push origin main --tags
+        VERSION=$(node -p "require('./package.json').version")
+        echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2

@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint src/",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "release": "commit-and-tag-version"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
@@ -26,6 +27,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.1.4",
+    "commit-and-tag-version": "^12.6.1",
     "eslint": "^10.0.2",
     "globals": "^17.4.0",
     "jsdom": "^28.1.0",
