@@ -1,4 +1,4 @@
-.PHONY: dev build clean test preview install lint
+.PHONY: dev build clean test preview install lint release
 
 ## Start development server
 dev:
@@ -31,3 +31,7 @@ install:
 ## Preview production build locally
 preview: build
 	npx vite preview
+
+## Bump version, update CHANGELOG.md, commit and tag
+release:
+	npm run release

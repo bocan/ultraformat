@@ -30,6 +30,10 @@ UltraFormat is the alternative. It's a single-page React app that you build once
 | **URL Codec** | Encode, decode & parse URLs with automatic query string breakdown |
 | **JWT Decoder** | Decode JSON Web Tokens and inspect headers, payloads, and claims |
 | **Color Converter** | Convert between HEX, RGB, and HSL with a live preview swatch and sliders |
+| **Lorem Generator** | Generate classic or hipster lorem ipsum by paragraphs, sentences, or words |
+| **Hash Generator** | Compute MD5, SHA-1, SHA-256, and SHA-512 hashes client-side |
+| **UUID Generator** | Bulk-generate v4 UUIDs with uppercase and no-dashes options |
+| **Timestamp Converter** | Convert Unix timestamps to human dates and back, with a live clock |
 
 ## Features
 
@@ -38,7 +42,7 @@ UltraFormat is the alternative. It's a single-page React app that you build once
 - **Accessible** — WCAG-compliant contrast, `prefers-reduced-motion` support, keyboard navigation, focus indicators, screen reader–friendly markup
 - **Fast** — sub-second load, no external API calls, no spinners
 - **Responsive** — works on desktop and tablet viewports
-- **121 unit tests** — across all tools and components
+- **149 unit tests** — across all tools and components
 - **Zero cookies, zero analytics, zero ads**
 
 ## Tech Stack
@@ -78,6 +82,7 @@ make test      # run unit tests
 make build     # type-check + production build
 make preview   # build then preview at localhost:4173
 make clean     # remove dist/ and Vite caches
+make release   # bump version, update CHANGELOG.md, commit and tag
 ```
 
 ## Production Build
