@@ -5,13 +5,18 @@ name: CI & Deploy
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'package.json'
+      - 'package-lock.json
   pull_request:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
+  pull-requests: writ
 
 concurrency:
   group: "pages"
@@ -22,20 +27,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
+
     - name: Use Node.js 24.x
       uses: actions/setup-node@v6
       with:
         node-version: 24.x
         cache: 'npm'
+
     - run: npm ci
     - run: npm run lint
     - run: npm test
     - run: npm run build
+
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com
+
     - name: Upload Pages artifact
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: actions/upload-pages-artifact@v3
       with:
         path: dist/
+
+    - name: Extract version from package.json
+      id: extract_version
+      run: |
+        VERSION=$(node -p "require('./package.json').version")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ steps.extract_version.outputs.version }}
+        name: Release v${{ steps.extract_version.outputs.version }}
+        generate_release_notes: true
+        draft: false
+        prerelease: false
 
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

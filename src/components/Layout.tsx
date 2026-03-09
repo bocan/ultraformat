@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { tools } from '../tools';
 import { useTheme } from '../useTheme';
+import { ChevronDown } from 'lucide-react';
 import './Layout.css';
 
 const BADGE_MESSAGES = [
@@ -19,6 +20,10 @@ export default function Layout() {
   const { theme, toggle } = useTheme();
   const [badgeIndex, setBadgeIndex] = useState(0);
   const [slideState, setSlideState] = useState<'visible' | 'out' | 'in'>('visible');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const activeTool = tools.find((t) => location.pathname === t.path) ?? null;
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
@@ -45,6 +50,22 @@ export default function Layout() {
     return () => clearInterval(id);
   }, []);
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  // Close dropdown on navigation
+  useEffect(() => {
+    setDropdownOpen(false);
+  }, [location.pathname]);
+
   return (
     <div className="layout">
       <a href="#main-content" className="skip-link">Skip to content</a>
@@ -54,44 +75,78 @@ export default function Layout() {
           <span className="topbar__name">UltraFormat</span>
         </NavLink>
 
-        <nav className="topbar__tabs" aria-label="Developer tools">
-          {tools.map((tool) => (
-            <NavLink
-              key={tool.id}
-              to={tool.path}
-              className={({ isActive }) =>
-                `topbar__tab ${isActive ? 'topbar__tab--active' : ''}`
-              }
-              style={{
-                '--tab-color': tool.color,
-                '--tab-dim': tool.colorDim,
-                '--tab-glow': tool.colorGlow,
-              } as React.CSSProperties}
-              aria-label={tool.name}
-            >
-              <span className="topbar__tab-icon" aria-hidden="true"><tool.icon size={14} strokeWidth={2.5} /></span>
-              <span className="topbar__tab-label">{tool.name}</span>
-            </NavLink>
-          ))}
-        </nav>
+        <div className="topbar__dropdown" ref={dropdownRef}>
+          <button
+            className="topbar__dropdown-trigger"
+            onClick={() => setDropdownOpen((o) => !o)}
+            aria-expanded={dropdownOpen}
+            aria-haspopup="listbox"
+            style={activeTool ? {
+              '--tab-color': activeTool.color,
+              '--tab-dim': activeTool.colorDim,
+            } as React.CSSProperties : undefined}
+          >
+            {activeTool ? (
+              <>
+                <span className="topbar__dropdown-icon" aria-hidden="true">
+                  <activeTool.icon size={14} strokeWidth={2.5} />
+                </span>
+                <span className="topbar__dropdown-label">{activeTool.name}</span>
+              </>
+            ) : (
+              <span className="topbar__dropdown-label">Tools</span>
+            )}
+            <ChevronDown size={14} className={`topbar__dropdown-chevron ${dropdownOpen ? 'topbar__dropdown-chevron--open' : ''}`} />
+          </button>
 
-        <div className="topbar__badge" role="status" aria-live="polite" aria-label={BADGE_MESSAGES[badgeIndex]}>
-          <span className="topbar__badge-dot" aria-hidden="true" />
-          <span className={`topbar__badge-text topbar__badge-text--${slideState}`}>
-            {BADGE_MESSAGES[badgeIndex]}
-          </span>
+          {dropdownOpen && (
+            <nav className="topbar__dropdown-menu" role="listbox" aria-label="Developer tools">
+              {tools.map((tool) => (
+                <NavLink
+                  key={tool.id}
+                  to={tool.path}
+                  role="option"
+                  aria-selected={location.pathname === tool.path}
+                  className={({ isActive }) =>
+                    `topbar__dropdown-item ${isActive ? 'topbar__dropdown-item--active' : ''}`
+                  }
+                  style={{
+                    '--tab-color': tool.color,
+                    '--tab-dim': tool.colorDim,
+                    '--tab-glow': tool.colorGlow,
+                  } as React.CSSProperties}
+                >
+                  <span className="topbar__dropdown-item-icon" aria-hidden="true">
+                    <tool.icon size={14} strokeWidth={2.5} />
+                  </span>
+                  <span>{tool.name}</span>
+                </NavLink>
+              ))}
+            </nav>
+          )}
         </div>
 
-        <button
-          className="theme-toggle"
-          onClick={toggle}
-          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        <div className="topbar__spacer" />
+
+        <div className="topbar__right">
+          <div className="topbar__badge" role="status" aria-live="polite" aria-label={BADGE_MESSAGES[badgeIndex]}>
+            <span className="topbar__badge-dot" aria-hidden="true" />
+            <span className={`topbar__badge-text topbar__badge-text--${slideState}`}>
+              {BADGE_MESSAGES[badgeIndex]}
+            </span>
+          </div>
+
+          <button
+            className="theme-toggle"
+            onClick={toggle}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
         >
           <span className="theme-toggle__icon" aria-hidden="true">
             {theme === 'dark' ? '☀' : '☾'}
           </span>
-        </button>
+          </button>
+        </div>
       </header>
 
       <main className={`main ${isHome ? 'main--home' : ''}`} id="main-content">

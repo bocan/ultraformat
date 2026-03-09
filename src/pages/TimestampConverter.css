@@ -1,0 +1,181 @@
+/* ═══════════════════════════════════════
+   Timestamp Converter Tool
+   Accent: Gold
+   ═══════════════════════════════════════ */
+
+.ts-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: calc(100dvh - 56px - var(--space-lg) * 2);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ── Live Clock ── */
+.ts-clock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--gold-dim);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.ts-clock__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+
+.ts-clock__value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Input ── */
+.ts-input {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ts-input__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.ts-input__controls {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.ts-input__btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.ts-input__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+.ts-input__btn--now {
+  background: var(--gold-dim);
+  color: var(--gold);
+  border-color: transparent;
+}
+
+.ts-input__field {
+  border: none;
+  border-radius: 0;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background: var(--bg-base);
+}
+
+/* ── Results ── */
+.ts-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+  flex: 1;
+  align-content: start;
+}
+
+.ts-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ts-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.ts-card__copy {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  padding: 4px 10px;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.ts-card__copy:hover {
+  background: var(--gold-dim);
+}
+.ts-card__copy--done {
+  color: var(--emerald);
+}
+
+.ts-card__value {
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Empty state ── */
+.ts-empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  padding: var(--space-xl);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ts-tool {
+    height: auto;
+    min-height: calc(100dvh - 56px - var(--space-lg) * 2);
+  }
+  .ts-results {
+    grid-template-columns: 1fr;
+  }
+  .ts-clock__value {
+    font-size: 1.125rem;
+  }
+}
