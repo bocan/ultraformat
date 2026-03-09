@@ -9,6 +9,10 @@ import RegexTester from './pages/RegexTester';
 import UrlCodec from './pages/UrlCodec';
 import JwtDecoder from './pages/JwtDecoder';
 import ColorConverter from './pages/ColorConverter';
+import LoremGenerator from './pages/LoremGenerator';
+import HashGenerator from './pages/HashGenerator';
+import UuidGenerator from './pages/UuidGenerator';
+import TimestampConverter from './pages/TimestampConverter';
 
 export default function App() {
   return (
@@ -23,6 +27,10 @@ export default function App() {
         <Route path="url" element={<UrlCodec />} />
         <Route path="jwt" element={<JwtDecoder />} />
         <Route path="color" element={<ColorConverter />} />
+        <Route path="lorem" element={<LoremGenerator />} />
+        <Route path="hash" element={<HashGenerator />} />
+        <Route path="uuid" element={<UuidGenerator />} />
+        <Route path="timestamp" element={<TimestampConverter />} />
       </Route>
     </Routes>
   );

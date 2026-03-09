@@ -1,0 +1,203 @@
+/* ═══════════════════════════════════════
+   UUID Generator Tool
+   Accent: Emerald
+   ═══════════════════════════════════════ */
+
+.uuid-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: calc(100dvh - 56px - var(--space-lg) * 2);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ── Toolbar ── */
+.uuid-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.uuid-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.uuid-toolbar__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.uuid-toolbar__count {
+  width: 64px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.uuid-toolbar__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.uuid-toolbar__checkbox input[type="checkbox"] {
+  accent-color: var(--emerald);
+  width: 16px;
+  height: 16px;
+}
+
+.uuid-toolbar__actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.uuid-toolbar__btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.uuid-toolbar__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+.uuid-toolbar__btn--generate {
+  background: var(--emerald-dim);
+  color: var(--emerald);
+  border-color: transparent;
+}
+.uuid-toolbar__btn--generate:hover {
+  box-shadow: 0 0 12px var(--emerald-glow);
+}
+
+/* ── Output ── */
+.uuid-output {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.uuid-output__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.uuid-output__copy {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--emerald);
+  padding: 4px 10px;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.uuid-output__copy:hover:not(:disabled) {
+  background: var(--emerald-dim);
+}
+.uuid-output__copy:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.uuid-output__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+}
+
+.uuid-output__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.uuid-output__item:hover {
+  background: var(--bg-surface);
+}
+
+.uuid-output__value {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.uuid-output__item-copy {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  border-radius: 3px;
+  opacity: 0;
+  transition: all 0.2s;
+}
+.uuid-output__item:hover .uuid-output__item-copy {
+  opacity: 1;
+}
+.uuid-output__item-copy:hover {
+  color: var(--emerald);
+  background: var(--emerald-dim);
+}
+
+.uuid-output__empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  padding: var(--space-xl);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .uuid-tool {
+    height: auto;
+    min-height: calc(100dvh - 56px - var(--space-lg) * 2);
+  }
+  .uuid-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .uuid-toolbar__group {
+    flex-wrap: wrap;
+  }
+}

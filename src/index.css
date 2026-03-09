@@ -54,6 +54,22 @@
   --orange-dim: rgba(255, 112, 67, 0.15);
   --orange-glow: rgba(255, 112, 67, 0.35);
 
+  --sky: #38BDF8;
+  --sky-dim: rgba(56, 189, 248, 0.15);
+  --sky-glow: rgba(56, 189, 248, 0.35);
+
+  --coral: #FB7185;
+  --coral-dim: rgba(251, 113, 133, 0.15);
+  --coral-glow: rgba(251, 113, 133, 0.35);
+
+  --emerald: #34D399;
+  --emerald-dim: rgba(52, 211, 153, 0.15);
+  --emerald-glow: rgba(52, 211, 153, 0.35);
+
+  --gold: #FBBF24;
+  --gold-dim: rgba(251, 191, 36, 0.15);
+  --gold-glow: rgba(251, 191, 36, 0.35);
+
   /* ── Typography ── */
   --font-display: 'Syne', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -125,6 +141,23 @@
   --orange: #C2410C;
   --orange-dim: rgba(194, 65, 12, 0.1);
   --orange-glow: rgba(194, 65, 12, 0.2);
+
+  --sky: #0284C7;
+  --sky-dim: rgba(2, 132, 199, 0.1);
+  --sky-glow: rgba(2, 132, 199, 0.2);
+
+  --coral: #E11D48;
+  --coral-dim: rgba(225, 29, 72, 0.1);
+  --coral-glow: rgba(225, 29, 72, 0.2);
+
+  --emerald: #059669;
+  --emerald-dim: rgba(5, 150, 105, 0.1);
+  --emerald-glow: rgba(5, 150, 105, 0.2);
+
+  --gold: #CA8A04;
+  --gold-dim: rgba(202, 138, 4, 0.1);
+  --gold-glow: rgba(202, 138, 4, 0.2);
+
   --noise-opacity: 0.04;
 }
 

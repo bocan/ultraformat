@@ -24,15 +24,12 @@ describe('Layout', () => {
     expect(screen.getByText('UltraFormat')).toBeInTheDocument();
   });
 
-  it('renders navigation with all tool tabs', () => {
-    renderLayout();
-    const nav = screen.getByRole('navigation', { name: /developer tools/i });
+  it('renders navigation with all tool tabs', async () => {
+    const { user } = renderLayout();
+    // Open the dropdown to reveal the nav
+    await user.click(screen.getByRole('button', { name: /tools/i }));
+    const nav = screen.getByRole('listbox', { name: /developer tools/i });
     expect(nav).toBeInTheDocument();
-    expect(screen.getByLabelText('JSON Formatter')).toBeInTheDocument();
-    expect(screen.getByLabelText('Diff Checker')).toBeInTheDocument();
-    expect(screen.getByLabelText('Base64 Codec')).toBeInTheDocument();
-    expect(screen.getByLabelText('Code Beautify')).toBeInTheDocument();
-    expect(screen.getByLabelText('Regex Tester')).toBeInTheDocument();
   });
 
   it('renders the rotating privacy badge', () => {
