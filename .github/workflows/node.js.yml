@@ -1,5 +1,5 @@
 # CI runs on every push and PR.
-# Merges to main: deploy to GitHub Pages + bump version + changelog + release.
+# Merges to main: bump version + release, then build with new version + deploy.
 
 name: CI & Deploy
 
@@ -34,27 +34,6 @@ jobs:
     - run: npm run lint
     - run: npm test
     - run: npm run build
-
-    - name: Upload Pages artifact
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: dist/
-
-  deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: ci
-    runs-on: ubuntu-latest
-    concurrency:
-      group: "pages-deploy"
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
 
   release:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -101,3 +80,36 @@ jobs:
         generate_release_notes: true
         draft: false
         prerelease: false
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: release
+    runs-on: ubuntu-latest
+    concurrency:
+      group: "pages-deploy"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        ref: main  # pull the latest main (with bumped version)
+
+    - name: Use Node.js 24.x
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24.x
+        cache: 'npm'
+
+    - run: npm ci
+    - run: npm run build
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist/
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
