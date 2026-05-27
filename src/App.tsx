@@ -13,6 +13,7 @@ import LoremGenerator from './pages/LoremGenerator';
 import HashGenerator from './pages/HashGenerator';
 import UuidGenerator from './pages/UuidGenerator';
 import TimestampConverter from './pages/TimestampConverter';
+import NetworkCalc from './pages/NetworkCalc';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="hash" element={<HashGenerator />} />
         <Route path="uuid" element={<UuidGenerator />} />
         <Route path="timestamp" element={<TimestampConverter />} />
+        <Route path="network" element={<NetworkCalc />} />
       </Route>
     </Routes>
   );

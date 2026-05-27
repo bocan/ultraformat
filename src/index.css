@@ -70,6 +70,10 @@
   --gold-dim: rgba(251, 191, 36, 0.15);
   --gold-glow: rgba(251, 191, 36, 0.35);
 
+  --indigo: #818CF8;
+  --indigo-dim: rgba(129, 140, 248, 0.15);
+  --indigo-glow: rgba(129, 140, 248, 0.35);
+
   /* ── Typography ── */
   --font-display: 'Syne', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -157,6 +161,10 @@
   --gold: #CA8A04;
   --gold-dim: rgba(202, 138, 4, 0.1);
   --gold-glow: rgba(202, 138, 4, 0.2);
+
+  --indigo: #4F46E5;
+  --indigo-dim: rgba(79, 70, 229, 0.1);
+  --indigo-glow: rgba(79, 70, 229, 0.2);
 
   --noise-opacity: 0.04;
 }

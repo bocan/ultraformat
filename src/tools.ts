@@ -12,6 +12,7 @@ import {
   Hash,
   Fingerprint,
   Clock,
+  Network,
 } from 'lucide-react';
 
 export interface Tool {
@@ -145,5 +146,15 @@ export const tools: Tool[] = [
     colorDim: 'var(--gold-dim)',
     colorGlow: 'var(--gold-glow)',
     icon: Clock,
+  },
+  {
+    id: 'network',
+    name: 'Network Calc',
+    description: 'CIDR calculator with subnet splitting, binary breakdown, and AWS/Azure cloud details',
+    path: '/network',
+    color: 'var(--indigo)',
+    colorDim: 'var(--indigo-dim)',
+    colorGlow: 'var(--indigo-glow)',
+    icon: Network,
   },
 ];
