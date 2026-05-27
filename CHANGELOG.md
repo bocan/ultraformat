@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/bocan/codex/compare/v1.2.0...v1.3.0) (2026-05-27)
+
+
+### Features
+
+* add Network Calculator tool ([c3fd5ff](https://github.com/bocan/codex/commit/c3fd5fff71b4dbabe573da31968a2e4548bc178f))
+
+
+### Chores
+
+* fix 19 dependabot security alerts via npm audit fix ([fffef64](https://github.com/bocan/codex/commit/fffef648a7bf0bd0f4f872ce1565ce1bbd4e23d8))
+
 ## [1.2.0](https://github.com/bocan/codex/compare/v1.1.0...v1.2.0) (2026-03-09)
 
 
