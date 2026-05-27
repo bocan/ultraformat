@@ -1,3 +1,5 @@
+[![CI & Deploy](https://github.com/bocan/ultraformat/actions/workflows/node.js.yml/badge.svg)](https://github.com/bocan/ultraformat/actions/workflows/node.js.yml)
+
 # UltraFormat
 
 **A self-hosted, privacy-first developer toolkit that runs entirely in your browser.**
