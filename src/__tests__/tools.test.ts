@@ -3,7 +3,7 @@ import { tools } from '../tools';
 
 describe('tools config', () => {
   it('has exactly 12 tools', () => {
-    expect(tools).toHaveLength(12);
+    expect(tools).toHaveLength(13);
   });
 
   it('each tool has required fields', () => {
