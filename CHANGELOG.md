@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.1](https://github.com/bocan/codex/compare/v1.3.0...v1.3.1) (2026-05-27)
+
+
+### Chores
+
+* add dependabot config to enable automated PRs ([c132f2b](https://github.com/bocan/codex/commit/c132f2ba2686b9bfef67301e874c20b84d210cde))
+* bump dependencies versions ([37890b8](https://github.com/bocan/codex/commit/37890b8f6cb8d2abdffc3c0c03bb6081e90d8b71))
+
 ## [1.3.0](https://github.com/bocan/codex/compare/v1.2.0...v1.3.0) (2026-05-27)
 
 
