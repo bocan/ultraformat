@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.2](https://github.com/bocan/codex/compare/v1.3.1...v1.3.2) (2026-05-27)
+
+
+### Chores
+
+* **deps-dev:** bump @vitejs/plugin-react from 5.2.0 to 6.0.2 ([72bdc4d](https://github.com/bocan/codex/commit/72bdc4d6224cac38fd322e433e9e85c813e52c51))
+* **deps-dev:** bump jsdom from 28.1.0 to 29.1.1 ([fd7e5b2](https://github.com/bocan/codex/commit/fd7e5b238a8c0b3f46f5f25286c2a4da5589636d))
+* **deps-dev:** bump typescript from 5.9.3 to 6.0.3 ([5411c2a](https://github.com/bocan/codex/commit/5411c2a68b961774cb1b8c75c8de030b97c03b43))
+* **deps-dev:** bump vite from 7.3.3 to 8.0.14 ([783f01e](https://github.com/bocan/codex/commit/783f01e468af2b78fd4c971ae27931f689e50080))
+* **deps:** bump lucide-react from 0.577.0 to 1.16.0 ([f0eea31](https://github.com/bocan/codex/commit/f0eea3184f3deda07ef7e823cf599a70813bb901))
+
 ## [1.3.1](https://github.com/bocan/codex/compare/v1.3.0...v1.3.1) (2026-05-27)
 
 
