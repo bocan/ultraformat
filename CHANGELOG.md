@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.1](https://github.com/bocan/codex/compare/v1.4.0...v1.4.1) (2026-05-28)
+
+
+### CI/CD
+
+* update GitHub Actions to latest versions ([2f37b7a](https://github.com/bocan/codex/commit/2f37b7aee7571cc464a74536b7516560381a7b17))
+
 ## [1.4.0](https://github.com/bocan/codex/compare/v1.3.2...v1.4.0) (2026-05-28)
 
 
