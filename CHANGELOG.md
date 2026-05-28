@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.5.0](https://github.com/bocan/codex/compare/v1.4.2...v1.5.0) (2026-05-28)
+
+
+### Features
+
+* add OG and Twitter card meta tags with optimised social preview image ([969324f](https://github.com/bocan/codex/commit/969324fd51f559ae7cb95f078fcc0c9a2d0e22e0))
+
 ## [1.4.2](https://github.com/bocan/codex/compare/v1.4.1...v1.4.2) (2026-05-28)
 
 
