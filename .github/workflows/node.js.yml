@@ -8,10 +8,9 @@ on:
     branches: [ "**" ]
     paths-ignore:
       - 'CHANGELOG.md'
-      - 'package.json'
-      - 'package-lock.json'
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: write
