@@ -13,6 +13,7 @@ import {
   Fingerprint,
   Clock,
   Network,
+  ScrollText,
 } from 'lucide-react';
 
 export interface Tool {
@@ -156,5 +157,15 @@ export const tools: Tool[] = [
     colorDim: 'var(--indigo-dim)',
     colorGlow: 'var(--indigo-glow)',
     icon: Network,
+  },
+  {
+    id: 'logclean',
+    name: 'Log Cleaner',
+    description: 'Strip timestamps, ANSI codes & Azure DevOps noise from raw pipeline logs',
+    path: '/logclean',
+    color: 'var(--rose)',
+    colorDim: 'var(--rose-dim)',
+    colorGlow: 'var(--rose-glow)',
+    icon: ScrollText,
   },
 ];

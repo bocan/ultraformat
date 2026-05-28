@@ -14,6 +14,7 @@ import HashGenerator from './pages/HashGenerator';
 import UuidGenerator from './pages/UuidGenerator';
 import TimestampConverter from './pages/TimestampConverter';
 import NetworkCalc from './pages/NetworkCalc';
+import LogCleaner from './pages/LogCleaner';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="uuid" element={<UuidGenerator />} />
         <Route path="timestamp" element={<TimestampConverter />} />
         <Route path="network" element={<NetworkCalc />} />
+        <Route path="logclean" element={<LogCleaner />} />
       </Route>
     </Routes>
   );
