@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.2](https://github.com/bocan/codex/compare/v1.4.1...v1.4.2) (2026-05-28)
+
+
+### Bug Fixes
+
+* copy index.html to 404.html at build time for GitHub Pages SPA routing ([2d58aed](https://github.com/bocan/codex/commit/2d58aed402abbfd60b04f45505a1b7b6059c70b9))
+
+
+### CI/CD
+
+* fix paths-ignore and add workflow_dispatch ([1545114](https://github.com/bocan/codex/commit/1545114464d6043c3a4338a778e12c578e9f24dd))
+
 ## [1.4.1](https://github.com/bocan/codex/compare/v1.4.0...v1.4.1) (2026-05-28)
 
 
