@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/bocan/codex/compare/v1.3.2...v1.4.0) (2026-05-28)
+
+
+### Features
+
+* add Log Cleaner tool for Azure DevOps / GitHub Actions raw logs ([2fc3807](https://github.com/bocan/codex/commit/2fc38072f34600ab131668cc9e15d29a49d9f7d4))
+
+
+### Bug Fixes
+
+* replace control-char regex with string.includes to fix no-control-regex lint ([f11aa8a](https://github.com/bocan/codex/commit/f11aa8afab303e13b12efdd628bf176de773571a))
+
 ## [1.3.2](https://github.com/bocan/codex/compare/v1.3.1...v1.3.2) (2026-05-27)
 
 
