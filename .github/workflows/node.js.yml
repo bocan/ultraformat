@@ -79,7 +79,7 @@ jobs:
         echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
 
     - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: ${{ steps.version.outputs.tag }}
         name: Release ${{ steps.version.outputs.tag }}
@@ -112,10 +112,10 @@ jobs:
     - run: npm run build
 
     - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v5
       with:
         path: dist/
 
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v4
+      uses: actions/deploy-pages@v5
