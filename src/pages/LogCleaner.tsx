@@ -190,7 +190,7 @@ Example Azure DevOps raw log lines:
       )}
 
       {/* ── Warning if ANSI not stripped but found ── */}
-      {result && !opts.stripAnsi && /\x1b\[/.test(input) && (
+      {result && !opts.stripAnsi && input.includes('\x1b[') && (
         <div className="lc-warn" role="alert">
           <AlertTriangle size={14} />
           ANSI stripping is disabled — escape codes are still present in the output.
