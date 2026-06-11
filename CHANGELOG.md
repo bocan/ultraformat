@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.6.0](https://github.com/bocan/codex/compare/v1.5.0...v1.6.0) (2026-06-11)
+
+
+### Features
+
+* add Link Checker tool for scanning page links and HTTP status codes ([7360592](https://github.com/bocan/codex/commit/736059256f11ea28cc6a802ae62217acd2eac410))
+
 ## [1.5.0](https://github.com/bocan/codex/compare/v1.4.2...v1.5.0) (2026-05-28)
 
 
