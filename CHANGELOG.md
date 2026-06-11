@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.7.0](https://github.com/bocan/codex/compare/v1.6.0...v1.7.0) (2026-06-11)
+
+
+### Features
+
+* **links:** distinguish CORS-hidden links from genuinely dead ones ([6788326](https://github.com/bocan/codex/commit/6788326c88198a3f3a3e0921d0c8fdd34ab0a4a3))
+
+
+### Bug Fixes
+
+* **links:** update progress counter to renamed unknown count ([22aba86](https://github.com/bocan/codex/commit/22aba86fe2f240e7e8065bd716e5676cc9a6dee8))
+
 ## [1.6.0](https://github.com/bocan/codex/compare/v1.5.0...v1.6.0) (2026-06-11)
 
 
