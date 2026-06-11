@@ -138,7 +138,7 @@ export default function LinkChecker() {
 
   const working = phase === 'working';
   const checking = working && links.length > 0;
-  const done = counts.ok + counts.redirect + counts.broken + counts.unknown;
+  const done = counts.ok + counts.redirect + counts.broken + counts.blocked;
 
   return (
     <div className="linkcheck-tool" role="region" aria-label="Link Checker">
