@@ -3,7 +3,8 @@ export type StatusKind =
   | 'redirect'
   | 'client-error'
   | 'server-error'
-  | 'blocked';
+  | 'unknown'
+  | 'unreachable';
 
 export interface ExtractedLink {
   /** Absolute URL with any fragment stripped */
@@ -33,7 +34,7 @@ export interface LinkCheckResult {
 
 export type FetchLike = (
   url: string,
-  init?: { signal?: AbortSignal; redirect?: RequestRedirect },
+  init?: { signal?: AbortSignal; redirect?: RequestRedirect; mode?: RequestMode },
 ) => Promise<{ status: number; redirected: boolean }>;
 
 /** Trim, add https:// when no scheme is given, and validate. Throws on garbage. */
@@ -124,7 +125,7 @@ export function classifyStatus(status: number): StatusKind {
   if (status >= 300 && status < 400) return 'redirect';
   if (status >= 400 && status < 500) return 'client-error';
   if (status >= 500) return 'server-error';
-  return 'blocked';
+  return 'unknown';
 }
 
 export interface CheckOptions {
@@ -140,39 +141,69 @@ export async function checkLink(
   { fetchFn, timeoutMs = 10000, signal }: CheckOptions = {},
 ): Promise<LinkCheckResult> {
   const doFetch: FetchLike = fetchFn ?? ((u, init) => fetch(u, init));
-  const controller = new AbortController();
-  let timedOut = false;
-  const timer = setTimeout(() => {
-    timedOut = true;
-    controller.abort();
-  }, timeoutMs);
-  const onOuterAbort = () => controller.abort();
-  signal?.addEventListener('abort', onOuterAbort, { once: true });
-
   const started = performance.now();
+  const elapsed = () => Math.round(performance.now() - started);
+  let timedOut = false;
+
+  const attempt = async (mode: RequestMode) => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, timeoutMs);
+    const onOuterAbort = () => controller.abort();
+    signal?.addEventListener('abort', onOuterAbort, { once: true });
+    try {
+      const res = await doFetch(url, {
+        signal: controller.signal,
+        redirect: 'follow',
+        mode,
+      });
+      // Headers are all we need; stop the body download.
+      controller.abort();
+      return res;
+    } finally {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', onOuterAbort);
+    }
+  };
+
+  const failure = (kind: StatusKind, detail: string): LinkCheckResult => ({
+    status: null,
+    kind,
+    redirected: false,
+    durationMs: elapsed(),
+    detail,
+  });
+
   try {
-    const res = await doFetch(url, {
-      signal: controller.signal,
-      redirect: 'follow',
-    });
-    const durationMs = Math.round(performance.now() - started);
-    // Headers are all we need; stop the body download.
-    controller.abort();
+    const res = await attempt('cors');
     return {
       status: res.status,
       kind: classifyStatus(res.status),
       redirected: res.redirected,
-      durationMs,
+      durationMs: elapsed(),
     };
   } catch {
-    const durationMs = Math.round(performance.now() - started);
-    let detail = 'CORS policy or network error';
-    if (timedOut) detail = `Timed out after ${timeoutMs / 1000}s`;
-    else if (signal?.aborted) detail = 'Cancelled';
-    return { status: null, kind: 'blocked', redirected: false, durationMs, detail };
-  } finally {
-    clearTimeout(timer);
-    signal?.removeEventListener('abort', onOuterAbort);
+    if (signal?.aborted) return failure('unknown', 'Cancelled');
+    if (timedOut) {
+      return failure('unreachable', `Timed out after ${timeoutMs / 1000}s`);
+    }
+    // A CORS refusal and a dead server both reject the fetch. An opaque
+    // no-cors probe tells them apart: it resolves whenever the server
+    // answered at all, and only fails on DNS/connection/TLS errors.
+    try {
+      await attempt('no-cors');
+      return failure('unknown', 'Server responded, but CORS hides the status code');
+    } catch {
+      if (signal?.aborted) return failure('unknown', 'Cancelled');
+      return failure(
+        'unreachable',
+        timedOut
+          ? `Timed out after ${timeoutMs / 1000}s`
+          : 'DNS, connection, or TLS failure',
+      );
+    }
   }
 }
 

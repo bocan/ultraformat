@@ -121,17 +121,28 @@ describe('checkLink', () => {
     expect(result.redirected).toBe(true);
   });
 
-  it('classifies fetch failures as blocked', async () => {
-    const fetchFn: FetchLike = async () => {
+  it('marks CORS-refused links as unknown when a no-cors probe succeeds', async () => {
+    const fetchFn: FetchLike = async (_url, init) => {
+      if (init?.mode === 'no-cors') return { status: 0, redirected: false };
       throw new TypeError('Failed to fetch');
     };
     const result = await checkLink('https://a.test/', { fetchFn });
     expect(result.status).toBeNull();
-    expect(result.kind).toBe('blocked');
+    expect(result.kind).toBe('unknown');
     expect(result.detail).toMatch(/CORS/);
   });
 
-  it('times out slow requests', async () => {
+  it('marks links as unreachable when even the no-cors probe fails', async () => {
+    const fetchFn: FetchLike = async () => {
+      throw new TypeError('Failed to fetch');
+    };
+    const result = await checkLink('https://dead.test/', { fetchFn });
+    expect(result.status).toBeNull();
+    expect(result.kind).toBe('unreachable');
+    expect(result.detail).toMatch(/DNS|connection/i);
+  });
+
+  it('times out slow requests as unreachable', async () => {
     const fetchFn: FetchLike = (_url, init) =>
       new Promise((_resolve, reject) => {
         init?.signal?.addEventListener('abort', () =>
@@ -139,7 +150,7 @@ describe('checkLink', () => {
         );
       });
     const result = await checkLink('https://slow.test/', { fetchFn, timeoutMs: 20 });
-    expect(result.kind).toBe('blocked');
+    expect(result.kind).toBe('unreachable');
     expect(result.detail).toMatch(/timed out/i);
   });
 });

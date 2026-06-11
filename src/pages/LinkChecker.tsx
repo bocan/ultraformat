@@ -11,22 +11,23 @@ import './LinkChecker.css';
 
 type Mode = 'fetch' | 'paste';
 type Phase = 'idle' | 'working' | 'done';
-type Filter = 'all' | 'ok' | 'redirect' | 'broken' | 'blocked';
+type Filter = 'all' | 'ok' | 'redirect' | 'broken' | 'unknown';
 
 const KIND_LABEL: Record<string, string> = {
   ok: 'OK',
   redirect: 'Redirect',
   'client-error': 'Client Error',
   'server-error': 'Server Error',
-  blocked: 'Blocked',
+  unknown: 'Unknown',
+  unreachable: 'Unreachable',
 };
+
+const BROKEN_KINDS = ['client-error', 'server-error', 'unreachable'];
 
 function matchesFilter(result: LinkCheckResult | null, filter: Filter): boolean {
   if (filter === 'all') return true;
   if (!result) return false;
-  if (filter === 'broken') {
-    return result.kind === 'client-error' || result.kind === 'server-error';
-  }
+  if (filter === 'broken') return BROKEN_KINDS.includes(result.kind);
   return result.kind === filter;
 }
 
@@ -45,12 +46,12 @@ export default function LinkChecker() {
   const abortRef = useRef<AbortController | null>(null);
 
   const counts = useMemo(() => {
-    const c = { ok: 0, redirect: 0, broken: 0, blocked: 0, pending: 0 };
+    const c = { ok: 0, redirect: 0, broken: 0, unknown: 0, pending: 0 };
     for (const r of results) {
       if (!r) c.pending += 1;
       else if (r.kind === 'ok') c.ok += 1;
       else if (r.kind === 'redirect') c.redirect += 1;
-      else if (r.kind === 'blocked') c.blocked += 1;
+      else if (r.kind === 'unknown') c.unknown += 1;
       else c.broken += 1;
     }
     return c;
@@ -121,7 +122,9 @@ export default function LinkChecker() {
   const handleCopy = async () => {
     const lines = links.map((link, i) => {
       const r = results[i];
-      const status = r ? (r.status ?? `BLOCKED (${r.detail ?? 'unreachable'})`) : 'PENDING';
+      const status = r
+        ? (r.status ?? `${KIND_LABEL[r.kind].toUpperCase()} (${r.detail ?? ''})`)
+        : 'PENDING';
       return `${status}\t${link.url}`;
     });
     await navigator.clipboard.writeText(lines.join('\n'));
@@ -223,9 +226,11 @@ export default function LinkChecker() {
       {/* CORS note */}
       <p className="linkcheck-note">
         Checks run directly from your browser, so nothing is sent anywhere except to the links
-        themselves. The trade-off: sites that don't allow cross-origin requests (CORS) show as
-        Blocked even when they're fine. Your own sites and same-origin links give the most
-        reliable results.
+        themselves. The trade-off: sites that don't allow cross-origin requests (CORS) hide
+        their status code, and show as <strong>Unknown</strong>: the server answered, but the
+        browser won't say with what. <strong>Unreachable</strong> means nothing answered at
+        all, so the link really is dead. To get exact status codes from a server you control,
+        send an <code>Access-Control-Allow-Origin</code> header.
       </p>
 
       {/* Error */}
@@ -264,10 +269,10 @@ export default function LinkChecker() {
             Broken <strong>{counts.broken}</strong>
           </button>
           <button
-            className={`linkcheck-chip linkcheck-chip--blocked ${filter === 'blocked' ? 'linkcheck-chip--active' : ''}`}
-            onClick={() => setFilter('blocked')}
+            className={`linkcheck-chip linkcheck-chip--unknown ${filter === 'unknown' ? 'linkcheck-chip--active' : ''}`}
+            onClick={() => setFilter('unknown')}
           >
-            Blocked <strong>{counts.blocked}</strong>
+            Unknown <strong>{counts.unknown}</strong>
           </button>
           <span className="linkcheck-summary__progress" aria-live="polite">
             {checking
@@ -301,7 +306,7 @@ export default function LinkChecker() {
                         className={`linkcheck-badge linkcheck-badge--${result.kind}`}
                         title={result.detail ?? KIND_LABEL[result.kind]}
                       >
-                        {result.status ?? 'n/a'}
+                        {result.status ?? (result.kind === 'unknown' ? '?' : 'ERR')}
                         <span className="linkcheck-badge__label">
                           {KIND_LABEL[result.kind]}
                         </span>

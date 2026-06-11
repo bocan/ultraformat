@@ -7,10 +7,11 @@ const pageHtml = `<html><body>
   <a href="https://site.test/good">Good link</a>
   <a href="https://site.test/missing">Missing link</a>
   <a href="https://walled.test/">Walled garden</a>
+  <a href="https://dead.test/">Dead link</a>
   <a href="mailto:hi@site.test">Email us</a>
 </body></html>`;
 
-function mockFetch(url: string): Promise<unknown> {
+function mockFetch(url: string, init?: { mode?: string }): Promise<unknown> {
   switch (url) {
     case 'https://site.test/':
       return Promise.resolve({
@@ -23,6 +24,11 @@ function mockFetch(url: string): Promise<unknown> {
       return Promise.resolve({ ok: true, status: 200, redirected: false });
     case 'https://site.test/missing':
       return Promise.resolve({ ok: false, status: 404, redirected: false });
+    case 'https://walled.test/':
+      // CORS-style refusal: opaque no-cors probe succeeds, cors fetch fails
+      return init?.mode === 'no-cors'
+        ? Promise.resolve({ ok: false, status: 0, redirected: false })
+        : Promise.reject(new TypeError('Failed to fetch'));
     default:
       return Promise.reject(new TypeError('Failed to fetch'));
   }
@@ -56,26 +62,30 @@ describe('LinkChecker', () => {
     await runCheck('site.test');
     expect(await screen.findByText('200')).toBeInTheDocument();
     expect(await screen.findByText('404')).toBeInTheDocument();
-    expect(await screen.findByText('n/a')).toBeInTheDocument();
+    expect(await screen.findByText('?')).toBeInTheDocument();
+    expect(await screen.findByText('ERR')).toBeInTheDocument();
     expect(screen.getByText('200').closest('.linkcheck-badge')).toHaveClass(
       'linkcheck-badge--ok',
     );
     expect(screen.getByText('404').closest('.linkcheck-badge')).toHaveClass(
       'linkcheck-badge--client-error',
     );
-    expect(screen.getByText('n/a').closest('.linkcheck-badge')).toHaveClass(
-      'linkcheck-badge--blocked',
+    expect(screen.getByText('?').closest('.linkcheck-badge')).toHaveClass(
+      'linkcheck-badge--unknown',
+    );
+    expect(screen.getByText('ERR').closest('.linkcheck-badge')).toHaveClass(
+      'linkcheck-badge--unreachable',
     );
   });
 
   it('shows summary counts after checking', async () => {
     await runCheck('site.test');
-    await screen.findByText('404');
+    await screen.findByText('ERR');
     const summary = screen.getByRole('group', { name: /result filters/i });
-    expect(summary).toHaveTextContent('All 3');
+    expect(summary).toHaveTextContent('All 4');
     expect(summary).toHaveTextContent('OK 1');
-    expect(summary).toHaveTextContent('Broken 1');
-    expect(summary).toHaveTextContent('Blocked 1');
+    expect(summary).toHaveTextContent('Broken 2');
+    expect(summary).toHaveTextContent('Unknown 1');
   });
 
   it('filters results by category', async () => {

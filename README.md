@@ -45,7 +45,7 @@ UltraFormat is the alternative. It's a single-page React app that you build once
 - **Accessible** — WCAG-compliant contrast, `prefers-reduced-motion` support, keyboard navigation, focus indicators, screen reader–friendly markup
 - **Fast** — sub-second load, no external API calls, no spinners
 - **Responsive** — works on desktop and tablet viewports
-- **179 unit tests** — across all tools and components
+- **180 unit tests** — across all tools and components
 - **Zero cookies, zero analytics, zero ads**
 
 ## Tech Stack
