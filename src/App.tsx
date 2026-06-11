@@ -15,7 +15,6 @@ import UuidGenerator from './pages/UuidGenerator';
 import TimestampConverter from './pages/TimestampConverter';
 import NetworkCalc from './pages/NetworkCalc';
 import LogCleaner from './pages/LogCleaner';
-import LinkChecker from './pages/LinkChecker';
 
 export default function App() {
   return (
@@ -36,7 +35,6 @@ export default function App() {
         <Route path="timestamp" element={<TimestampConverter />} />
         <Route path="network" element={<NetworkCalc />} />
         <Route path="logclean" element={<LogCleaner />} />
-        <Route path="links" element={<LinkChecker />} />
       </Route>
     </Routes>
   );
