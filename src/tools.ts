@@ -14,6 +14,7 @@ import {
   Clock,
   Network,
   ScrollText,
+  Globe,
 } from 'lucide-react';
 
 export interface Tool {
@@ -167,5 +168,15 @@ export const tools: Tool[] = [
     colorDim: 'var(--rose-dim)',
     colorGlow: 'var(--rose-glow)',
     icon: ScrollText,
+  },
+  {
+    id: 'links',
+    name: 'Link Checker',
+    description: 'Scan a web page and check every link for broken URLs, redirects & HTTP status codes',
+    path: '/links',
+    color: 'var(--emerald)',
+    colorDim: 'var(--emerald-dim)',
+    colorGlow: 'var(--emerald-glow)',
+    icon: Globe,
   },
 ];

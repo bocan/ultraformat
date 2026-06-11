@@ -1,0 +1,397 @@
+/* ═══════════════════════════════════════
+   Link Checker Tool
+   Accent: Emerald
+   ═══════════════════════════════════════ */
+
+.linkcheck-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-height: calc(100dvh - 56px - var(--space-lg) * 2);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ── Toolbar ── */
+.linkcheck-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.linkcheck-toolbar__tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-raised);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  border: 1px solid var(--border-subtle);
+}
+
+.linkcheck-toolbar__tab {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.linkcheck-toolbar__tab:hover {
+  color: var(--text-primary);
+}
+.linkcheck-toolbar__tab--active {
+  background: var(--emerald-dim);
+  color: var(--emerald);
+}
+
+.linkcheck-toolbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.linkcheck-toolbar__btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.linkcheck-toolbar__btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+.linkcheck-toolbar__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.linkcheck-toolbar__btn--primary {
+  background: var(--emerald-dim);
+  border-color: var(--emerald-glow);
+  color: var(--emerald);
+  font-weight: 600;
+}
+.linkcheck-toolbar__btn--primary:hover {
+  color: var(--emerald);
+  border-color: var(--emerald);
+}
+.linkcheck-toolbar__btn--done {
+  color: var(--lime) !important;
+}
+
+/* ── Inputs ── */
+.linkcheck-input {
+  width: 100%;
+  padding: 12px var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background: var(--bg-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.linkcheck-input:focus {
+  border-color: var(--emerald);
+}
+
+.linkcheck-paste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.linkcheck-paste__editor {
+  min-height: 140px;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  outline: none;
+}
+.linkcheck-paste__editor:focus {
+  border-color: var(--emerald);
+}
+
+/* ── Note ── */
+.linkcheck-note {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Error ── */
+.linkcheck-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 0, 128, 0.08);
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--magenta);
+}
+
+.linkcheck-error__icon {
+  font-weight: 700;
+}
+
+/* ── Summary chips ── */
+.linkcheck-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.linkcheck-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.linkcheck-chip:hover {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+.linkcheck-chip--active {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+.linkcheck-chip strong {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.linkcheck-chip--ok strong {
+  color: var(--emerald);
+}
+.linkcheck-chip--redirect strong {
+  color: var(--amber);
+}
+.linkcheck-chip--broken strong {
+  color: var(--rose);
+}
+.linkcheck-chip--blocked strong {
+  color: var(--text-muted);
+}
+
+.linkcheck-summary__progress {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── Results table ── */
+.linkcheck-results {
+  flex: 1;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: auto;
+}
+
+.linkcheck-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.linkcheck-table th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 1;
+}
+
+.linkcheck-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+}
+
+.linkcheck-table tr:last-child td {
+  border-bottom: none;
+}
+
+.linkcheck-table__status-col {
+  width: 130px;
+}
+.linkcheck-table__time-col {
+  width: 80px;
+}
+
+.linkcheck-table__url {
+  word-break: break-all;
+}
+.linkcheck-table__url a {
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--border-medium);
+}
+.linkcheck-table__url a:hover {
+  color: var(--emerald);
+  border-bottom-color: var(--emerald);
+}
+
+.linkcheck-table__text {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.linkcheck-table__time {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.linkcheck-table__empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-lg) !important;
+}
+
+/* ── Status badges ── */
+.linkcheck-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.linkcheck-badge__label {
+  font-weight: 400;
+  font-size: 0.6875rem;
+  opacity: 0.85;
+}
+
+.linkcheck-badge--ok {
+  color: var(--emerald);
+  background: var(--emerald-dim);
+}
+.linkcheck-badge--redirect {
+  color: var(--amber);
+  background: var(--amber-dim);
+}
+.linkcheck-badge--client-error {
+  color: var(--rose);
+  background: var(--rose-dim);
+}
+.linkcheck-badge--server-error {
+  color: var(--magenta);
+  background: var(--magenta-dim);
+}
+.linkcheck-badge--blocked {
+  color: var(--text-muted);
+  background: var(--bg-overlay);
+}
+.linkcheck-badge--pending {
+  color: var(--text-muted);
+}
+
+/* ── Tags ── */
+.linkcheck-table__tags {
+  white-space: nowrap;
+}
+
+.linkcheck-tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+.linkcheck-tag--warn {
+  color: var(--amber);
+  border-color: var(--amber-glow);
+}
+
+/* ── Empty state ── */
+.linkcheck-empty {
+  padding: var(--space-2xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+/* ── Skipped links ── */
+.linkcheck-skipped {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.linkcheck-skipped summary {
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.linkcheck-skipped ul {
+  list-style: none;
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+}
+
+.linkcheck-skipped li {
+  display: flex;
+  gap: var(--space-md);
+  padding: 4px 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.linkcheck-skipped__href {
+  word-break: break-all;
+}
+
+.linkcheck-skipped__reason {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .linkcheck-table__text {
+    display: none;
+  }
+}
