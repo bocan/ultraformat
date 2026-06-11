@@ -130,17 +130,6 @@
   color: var(--text-muted);
   margin: 0;
 }
-.linkcheck-note strong {
-  color: var(--text-secondary);
-}
-.linkcheck-note code {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 3px;
-  padding: 1px 5px;
-}
 
 /* ── Error ── */
 .linkcheck-error {
@@ -202,7 +191,7 @@
 .linkcheck-chip--broken strong {
   color: var(--rose);
 }
-.linkcheck-chip--unknown strong {
+.linkcheck-chip--blocked strong {
   color: var(--text-muted);
 }
 
@@ -329,13 +318,9 @@
   color: var(--magenta);
   background: var(--magenta-dim);
 }
-.linkcheck-badge--unknown {
+.linkcheck-badge--blocked {
   color: var(--text-muted);
   background: var(--bg-overlay);
-}
-.linkcheck-badge--unreachable {
-  color: var(--orange);
-  background: var(--orange-dim);
 }
 .linkcheck-badge--pending {
   color: var(--text-muted);
