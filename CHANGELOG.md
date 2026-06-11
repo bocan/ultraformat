@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.7.1](https://github.com/bocan/codex/compare/v1.7.0...v1.7.1) (2026-06-11)
+
+
+### Chores
+
+* add CLAUDE.md ([78e65cc](https://github.com/bocan/codex/commit/78e65cc531141f88cea038b190dd6dac2a54c54a))
+
 ## [1.7.0](https://github.com/bocan/codex/compare/v1.6.0...v1.7.0) (2026-06-11)
 
 
