@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.8.1](https://github.com/bocan/codex/compare/v1.8.0...v1.8.1) (2026-06-18)
+
+
+### Chores
+
+* update dependencies ([117d6d6](https://github.com/bocan/codex/commit/117d6d605a1e3eee3721b152050183db39c98989))
+
 ## [1.8.0](https://github.com/bocan/codex/compare/v1.7.1...v1.8.0) (2026-06-18)
 
 
