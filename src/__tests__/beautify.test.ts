@@ -57,6 +57,14 @@ describe('detectLanguage', () => {
     expect(detectLanguage('<svg viewBox="0 0 100 100"></svg>')).toBe('xml');
   });
 
+  it('detects RSS feed without xml declaration', () => {
+    expect(detectLanguage('<rss version="2.0"><channel></channel></rss>')).toBe('xml');
+  });
+
+  it('detects Atom feed', () => {
+    expect(detectLanguage('<feed xmlns="http://www.w3.org/2005/Atom"></feed>')).toBe('xml');
+  });
+
   it('defaults to javascript', () => {
     expect(detectLanguage('const x = 42;')).toBe('javascript');
   });
@@ -126,6 +134,20 @@ describe('beautifyCode', () => {
     expect(result).toContain('SELECT');
     expect(result).toContain('FROM');
     expect(result).toContain('WHERE');
+  });
+
+  it('formats an RSS feed with the XML parser', async () => {
+    const ugly =
+      '<?xml version="1.0"?><rss version="2.0"><channel><title>Demo</title>' +
+      '<item><title>First</title><description><![CDATA[<p>Hello & welcome</p>]]></description></item>' +
+      '</channel></rss>';
+    const result = await beautifyCode(ugly, 'xml');
+    // Reflowed onto multiple indented lines
+    expect(result.split('\n').length).toBeGreaterThan(3);
+    expect(result).toContain('<channel>');
+    expect(result).toContain('<item>');
+    // CDATA payload survives intact (not HTML-escaped)
+    expect(result).toContain('<![CDATA[<p>Hello & welcome</p>]]>');
   });
 
   it('respects indent size', async () => {

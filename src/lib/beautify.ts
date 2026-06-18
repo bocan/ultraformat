@@ -5,6 +5,7 @@ import parserHtml from 'prettier/plugins/html';
 import parserCss from 'prettier/plugins/postcss';
 import parserTs from 'prettier/plugins/typescript';
 import parserYaml from 'prettier/plugins/yaml';
+import parserXml from '@prettier/plugin-xml';
 
 export type Language = 'html' | 'css' | 'javascript' | 'typescript' | 'yaml' | 'sql' | 'xml';
 
@@ -21,17 +22,17 @@ export const LANGUAGES: LanguageOption[] = [
   { id: 'typescript', label: 'TypeScript', parser: 'typescript' },
   { id: 'yaml', label: 'YAML', parser: 'yaml' },
   { id: 'sql', label: 'SQL', parser: '__sql' },
-  { id: 'xml', label: 'XML', parser: 'html' },
+  { id: 'xml', label: 'XML / RSS', parser: 'xml' },
 ];
 
-const PRETTIER_PLUGINS = [parserBabel, parserEstree, parserHtml, parserCss, parserTs, parserYaml];
+const PRETTIER_PLUGINS = [parserBabel, parserEstree, parserHtml, parserCss, parserTs, parserYaml, parserXml];
 
 /** Detect language from content heuristics */
 export function detectLanguage(code: string): Language {
   const trimmed = code.trimStart();
 
-  // XML declaration or common XML roots
-  if (/^<\?xml\b/i.test(trimmed) || /^<(svg|manifest|project|resources|configuration)\b/i.test(trimmed)) return 'xml';
+  // XML declaration or common XML roots (incl. RSS/Atom feeds)
+  if (/^<\?xml\b/i.test(trimmed) || /^<(svg|manifest|project|resources|configuration|rss|feed|channel|urlset)\b/i.test(trimmed)) return 'xml';
 
   // HTML
   if (/^<!doctype\s+html/i.test(trimmed) || /^<html[\s>]/i.test(trimmed)) return 'html';
@@ -76,9 +77,9 @@ export async function beautifyCode(
     singleQuote: true,
     trailingComma: 'all',
     // HTML-specific
-    ...(language === 'html' || language === 'xml'
-      ? { htmlWhitespaceSensitivity: 'ignore' as const }
-      : {}),
+    ...(language === 'html' ? { htmlWhitespaceSensitivity: 'ignore' as const } : {}),
+    // XML-specific (RSS, Atom, SVG, POM, …)
+    ...(language === 'xml' ? { xmlWhitespaceSensitivity: 'ignore' as const } : {}),
   });
 
   return result;

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-UltraFormat is a privacy-first, 100% client-side developer toolkit (JSON formatter, diff checker, Base64, JWT decoder, etc.) built with React 19, TypeScript, Vite, and React Router. **No code may make network calls**, with one deliberate exception: the Link Checker tool fetches only the URLs the user explicitly asks it to check, directly from the browser (never via a proxy). Everything else processes data entirely client-side. No UI framework or component library; all CSS is hand-written.
+UltraFormat is a privacy-first, 100% client-side developer toolkit (JSON formatter, diff checker, Base64, JWT decoder, etc.) built with React 19, TypeScript, Vite, and React Router. **No code may make network calls** — everything processes data entirely client-side. No UI framework or component library; all CSS is hand-written.
 
 ## Commands
 

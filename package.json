@@ -13,6 +13,7 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
+    "@prettier/plugin-xml": "^3.4.2",
     "lucide-react": "^1.16.0",
     "prettier": "^3.8.1",
     "react": "^19.0.0",
