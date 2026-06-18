@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.8.0](https://github.com/bocan/codex/compare/v1.7.1...v1.8.0) (2026-06-18)
+
+
+### Features
+
+* **beautify:** proper XML/RSS formatting via @prettier/plugin-xml ([c2e83b4](https://github.com/bocan/codex/commit/c2e83b4de1af4682b7ef825e430e9bd7c887e5a0))
+
 ## [1.7.1](https://github.com/bocan/codex/compare/v1.7.0...v1.7.1) (2026-06-11)
 
 
